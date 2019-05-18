@@ -1,0 +1,650 @@
+
+# Data 
+
+The seemingly simple act of description in itself is perhaps understudied; some
+have even argued that the important process of data generation is one of the
+least developed skills in social science [@singer_variables_1982 212]. While
+developing theories and formalizations of "mere observation" might not be the
+most salient of activities for social scientists, it is, arguably, the
+framework on which empirical study rests.
+
+Being precise about what measurement is, how it is done, and what challenges
+are inherent in it, also makes it easier to see favourable similarities with
+processes such as statistical learning. This link is the foundation for the
+work presented here: The purpose of this chapter is to establish the
+theoretical background of the system that is presented in the subsequent
+chapters. By first describing what data is, and how it is made, I establish
+several formalizations that are used in the following chapters to describe a
+how computers can be applied to generated structured data.
+
+While this chapter focuses on the basic definitions of data creation, the next
+chapter describes a specific process of coding data about ceasefires from
+newspaper data. While @holsti_content_1969 [94] emphasizes the importance of
+referencing some specific research question when discussing data creation
+methodology, I will nevertheless first attempt some nonspecific definitions of
+data, and the process of creating data, to ground the following discussion. 
+
+I will attempt to give some formal definitions of the component processes of
+data making, that will facilitate a structured discussion of the various kinds
+of data quality. The term "data quality" covers several aspects of how the
+data relates to the real world, and makes it possible to assess and compare
+different ways of producing data using a common standard. High quality is
+always desirable, but is very often difficult to attain. The core of my
+argument, and the motivation behind the work presented in the following
+chapters, is that the application of computers in data-creation makes it
+possible to maintain data quality while producing large amounts of data. 
+
+The nontrivial factor of cost is also a major driving factor behind
+automatization of processes in data collection. It was made clear in the
+previous chapter that important phenomena are also "data scarce", which
+prevents further study. This is in no small part due to the fact that the
+collection of high-quality data can be incredibly expensive and time-consuming.
+This makes the effectivization of data-collection a prerequisite for further
+development of theory and knowledge.
+
+## Definitions
+
+A datum is essentially just a statement of something that was: An existential
+statement that refers to some state, condition or event that has existed
+@singer_variables_1982. Datum is a Latin word, which originally means "a
+given". Data can thus be interpreted as "what is given" for an analysis, or
+rather, what is taken to be true; the premise for an argument. In this broad
+sense, any kind of perception or record, ephemeral or permanent, is data. Data
+is synonymous with information; perceived and recorded bits that refer to some
+fact, notion or state. 
+
+Reality, however, is an intractable mass of information, and the world is full
+of an infinite number of facts. When seeking knowledge about some particular
+phenomenon, it becomes necessary to make judgments about data relevance, to
+seek the "signal" in the "sea of noise" [@singer_variables_1982 196]. This is
+called selection, and is the first of two necessary steps
+[@singer_data-making_1965 69] from "raw" to structured data. 
+
+The next step is classification, or structured comprehension of the signal
+observations. In a sense, this is also a kind of selection process, as it
+involves choosing the set of _attributes_ that will represent the phenomena:
+Once what we want to study has been defined, we also need to decide what it is
+about our objects of study that is relevant. A "data language", which denotes
+the relevant attributes and their significance, is the "Rosetta Stone" that
+mediates between the unstructured matter of raw observation and the structured
+matter of data [@krippendorff_content_2004 150]. 
+
+When combined, selection and classification of raw information creates
+structured data; a collection of bits of information that are curated and
+recorded according to a given set of procedures. This is a simplifying act
+[@king_designing_1994 42]; some information is emphasized while the rest is
+discarded. This discrimination between signal and noise is one of the most
+difficult tasks in social science (ibid.). 
+
+The virtue of simplification, however, is that it facilitates analysis: Since
+the same procedures for structuring observations are applied to multiple cases,
+the resultant values can be compared in many useful ways. Data is purportedly
+connected to the world of concepts, and allows for structured reasoning, the
+testing of hypotheses and the observation of patterns relevant to the
+development of theory. 
+
+However, the "conceptual screening" [@singer_data-making_1965 69] that is
+performed on raw information to produce data is certainly not neutral, a fact
+that in any case warrants critical assessment of data. Data should always be
+thought of as something more than mere facts: It is rather a combination of
+facts and scheme [@krippendorff_content_2004 81]. This means that auditing
+data, in terms of truthfulness and usefulness, is only possible through a
+detailed understanding of the scheme that links facts to structured data.
+
+### Data structure
+
+Selected and classified observation make structured data: Information that has
+been registered according to a predetermined set of criteria. This is also a
+rather broad definition however; for the sake of simplicity, I will follow an
+influential definition of structured data that is more specific. This
+definition is attributed to @codd_relational_1970: Through what is termed the
+relational model, or relational theory [@date_database_2001 5] of data, it is
+possible to define some basic properties and traits of structured data that
+serve as a practical foundation for further discussion. 
+
+The relational model states that structured data are organized into relations,
+which might also be called tables. A relation has columns, which
+@codd_relational_1970 also call domains, and rows. Rows are distinct tuples
+containing one value from each domain. Importantly, columns hold a single
+significance, or meaning, representing some category or kind of information. 
+ 
+What is useful about Codds relational model of data, is that it emphasizes the
+relatedness of the observations _through_ the information contained in the
+columns. This means that rows can be compared as similar but distinct instances
+having values in the same domains, meaning that they hold some value of
+information in the same categories, or rather, variables. The assumption of
+comparability and structured difference in terms of the variables makes the
+rows comparable: The relational data structure is a structure that, by design,
+facilitates comparative analysis. 
+
+The way in which the relational model facilitates analysis is clearer in the
+later specification of "Tidy data" [@wickham_tidy_2014], a special case of
+relational data that is further designed to easily yield itself to analysis.
+Tidy data is summarized through three principles that form a standard for how
+the semantics and the structure of data should be related (ibid. 4): 
+
+1. Each variable forms a column
+2. Each observation forms a row
+3. Each type of observational unit forms a table
+
+The idea that observations can be seen as related through their traits requires
+an assumption of relatedness and difference. The segregation of observational
+units into separate tables (3) depends on the assumption of difference between
+the units, and the collection of values under a single given variable column
+(2) depends on the assumption of equality of the values in terms of the
+dimension that they express. In other words, the units are distinct, but
+comparable.
+
+The reason for committing to this narrow model is analyzability, as
+Analyzability might be said to be the main motivation behind the difficult and
+costly enterprise of data-making in the first place [@krippendorff_content_2004
+146]. While other kinds of structures, such as graphs or dictionaries are also
+analyzable, the readily analyzable form of unit-tables where the units can be
+compared in terms of a given set of variables is a useful ideal model to aim
+for when determining how the data should be structured before collection can
+begin. This makes the tidy model a useful point of reference when discussing
+both the merit, and the techniques of structuring data: While there are many
+kinds of structured data, I will only refer to the "tidy" tabular form in this
+thesis.
+
+## Making data 
+
+Scientific observation is, perhaps most of all, defined by systematicity. This
+is what sets data coding apart from "mere" observation. Coding, or
+"data-making" is thus defined as the application of rules to a set of
+observations. Furthermore, understanding the set of rules and the way they were
+applied is key to be able to reason about data. 
+
+Reasoning about data requires an understanding of both raw material, and the
+rules with which it was made. While a discussion of the raw information that is
+structured is specific to each data-gathering effort, data gathering schemes
+can be discussed more generally. Data creation can refer to a wide variety of
+methods, with the common element that information is recorded in some
+structured, predetermined way. The method applied in the following chapters is
+Content Analysis, defined as the systematic comprehension of _text_ according
+to a given procedure [@holsti_content_1969 5], but the terms and procedures
+discussed here are not exclusive to the analysis of text. 
+
+@adcock_measurement_2001 [530] discusses the relationship between concepts and
+observations in terms of four levels: From "background concept" to the
+application of indicators. These levels are linked by corresponding tasks, which 
+link the world of concepts with empirical referents. Data making is the
+traversal of these levels in terms of the tasks: Conceptualization,
+operationalization, and scoring.
+
+Conceptualization is a systematic formulation of some concept of interest
+(ibid. 529): The researcher starts with an interest in a "background concept"
+or domain, and must develop some systematic idea about how the concept is
+manifested in the form of empirical fact. Indeed, we must start with some idea
+of what we want to explain [@king_designing_1994 51], because we need to be
+able to discern between relevant and irrelevant facts about the objects we are
+looking at. This means that data collection is likely tied to the development
+of some theory about a concept or phenomenon of interest. 
+
+The outcome of data-making is the result of several acts that depend on prior
+assumptions; both the conceptualization and operationalization that define how
+the data relates to the realm of theory. While this is an inevitable fact
+about any kind of data; it must be handled cognizantly by those who admit the
+data in their analyses.
+
+The codebook, instructions, coding guide or computer program used to process
+the raw information connects structured and unstructured data; linking the
+phenomena and the theoretical backdrop in which the data is framed. The
+creation of data starts with the definition of this material. Central elements
+are how the coding categories are defined, what the units of analysis are, and
+how the units will map to these to the categories [@holsti_content_1969 94].
+This must all be established a-priori, before structured observations can be
+recorded [@neuendorf_content_2017 18].
+
+### Truth and data 
+
+When discussing methodology, it is essential that key terms are disambiguated
+[@gerring_case_2008 19]. A potentially confusing term when discussing the
+process of data-making is "true". What might be helpful, is to discern between
+the "kinds" of truth attainable through measurement: 
+
+The truth of some measuring procedure, given operationalization, or "test", is
+defined as the outcome of such a procedure administered to a given case exempt
+random errors of measurement [@allen_introduction_1979 57]. This truth is
+expressed by the concept of _reliability_. Deviations from this first truth
+are called "errors of measurement", and are assumed to be unsystematic. In this
+thesis, I will refer to this kind of "truth" as small $t$:
+
+\begin{align*}
+e &:= error \\ 
+m &:= measurement \\
+m &= t + e 
+\end{align*}
+
+The _ideal truth_ of the background concept, on the other hand, is what we
+approximate when we are conceptualizing, and reasoning about how and why to
+collect data [@adcock_measurement_2001 531]. How this kind of truth should be
+assessed, or even if there is such a thing as "ideal truths" about background
+concepts, are rather abstract questions which I will not go deeper into here:
+It should be said, however, that the collection of data is moot without
+properly defined analytical constructs [@krippendorff_content_2004 89].
+
+A third kind of truth in measurement might also be defined, relating to the
+term _validity_. Valid measurement means that each measure accurately reflects
+the concept as defined, or rather, that we are measuring what we are trying to
+measure [@adcock_measurement_2001 529]. In this sense, true measurements are
+not only free from random error, but are also a correct representation of the
+concept as defined. 
+
+The stages of truth might be thought of as hierarchical: It is not possible to
+attain a true measurement of a concept as it is operationalized, without
+attaining the truth of that operationalization. Similarly, it is not
+reasonable to think that one can approach the "real "truth of some concept as
+it actually is, without being able to measure correctly according to how it is
+understood. Put technically: Reliability is antecedent to validity, and
+validity is antecedent to "proper" understanding. 
+
+Holding the different kinds of discussion about the "truth" of a measurement
+separate is practical, as it also makes it possible to keep separate the
+discussion of validity, reliability, and the more foundational, philosophical
+arguments about the understanding of phenomena. Only the first two subjects are
+approached here.
+
+### Data quality
+
+Considering the difficulty inherent in relating data to the truth of both a
+measurement procedure, and the intended concept, it should be clear that
+data-making is a process that involves both practical and conceptual
+challenges. Producing high-quality data, especially at scale, requires that
+much attention is put into developing the procedures and rules to be applied.
+Ensuring valid and reliable measurement is just as important as being able to
+produce data at scale: Without sound measurement, "big data" is nothing more
+than useless noise. 
+
+With more and more data being made available through the internet, being able
+to discern between good and bad data is of great importance
+[@simmhan_survey_2005]. Bad data corrupts and analysis or comprehension of it
+with false knowledge, yielding seemingly credible falsities. These "fake views"
+of the world are much more dangerous than other kinds of falsities in that they
+seem credible, and might yield themselves to statistical analysis that provides
+great rhetorical weight. "Cascading errors" is a term used by
+@chojnacki_event_2012 to warn against the propagation of poor inferential
+quality from data to analysis. 
+
+Put simply; if the instructions are not public and explicit, the data cannot be
+admitted to an analysis with any degree of confidence [@singer_wages_1972 14].
+If a researcher unwittingly admits data with errors, such as incorrect
+operationalizations, these errors "cascade", also affecting the result of any
+subsequent analysis [@chojnacki_event_2012 384].
+
+Therefore, the single most important rule for data collection is to be diligent
+in recording details about the process and reasoning behind it, and to publish
+these details along with the data [@king_designing_1994 51]. In fact, one might
+argue that the very idea of research "presupposes explicitness"
+[@krippendorff_content_2004 81]. 
+
+With open procedures, it is possible to carefully assess the quality of data.
+Data quality is often discussed using two key terms: Validity and Reliability.
+Together, the two measures are an expression of how well the data reflects
+whatever concept or idea. Valid and reliable data is data that accurately and
+reliably represents what it is purported to represent, and a prerequisite for
+any further meaningful analysis. 
+
+### Measurement
+
+Once the units of analysis and their attributes have been defined, and the
+schema of the data has been established, the process of data-making is a
+process of _measurement_. The term measurement covers the steps of
+_operationalization_ and _scoring_ [@adcock_measurement_2001 530]. 
+
+The classic definition of measurement is that it is "assignment of numerals to
+objects or events according to rules" [@stevens_theory_1946 677]. While the
+term "numeral" might seem equivalent to "number", it might also simply mean
+"symbol" [@kerlinger_foundations_1973 427]: A numeral might hold quantitative
+meaning as a number, but can also simply serve as a label, like the numbering
+of football-players or billiard balls. Thus, measurement can either be
+a process of labelling or quantifying some phenomenon; the core process of data
+collection.
+
+Measurement is a structured process, which is done according to a scale, which
+must be defined in advance. This means that what is observable is pre-defined
+as a "range"; a space of possible outcomes. Measurement, then, is a process of
+mapping a set of observations, termed the domain of the measurement, to this
+range, according to some given procedure, or "rule"
+[@kerlinger_foundations_1973 428].
+
+Measurement is analogous to the application of a function; the rule is a
+function of the observations, and produces a given range of outcomes. Firstly,
+$A$ is defined as a given range, or "scale" in which the measurements will
+fall, or rather, the range of possible measurements as defined by the
+measurement scheme. $I$ is a set of $n$ length, $i_1...i_n$, that contain the
+attributes of a unit $u$. $f$ is a rule for mapping these elements to the scale
+$A$: 
+
+\begin{align}
+t_u &= f(I_u) \label{measurement}\\
+t &\in A \label{range}\\
+f(I_u): I_u &\to A \label{mapping}
+\end{align}
+
+When talking about "real world" measurement, however, an important addition is
+needed to complete this formalization. A given measurement will, in any case,
+contain stochastic error, or $e$ [@kerlinger_foundations_1973 446]. The error
+term, contains any kind of disagreement between what "should" have been
+measured, according to the rules of the measurement procedure, and what was
+actually measured. A more realistic formalization of the process, then, is:
+
+\begin{align}
+g(I_u) &= f(I_u) + e\label{errorFunc}\\
+m_u &= g(I_u)\label{errMeasure}\\
+m_u &\in B\label{errRange}\\
+g(I_u): I &\to B\label{errMap}
+\end{align}
+
+The function $g$ includes an error term, while the range of outcomes of $g$,
+$B$ is a subset of the range of "true" outcomes on the scale $A$, meaning that
+the error term cannot make the score exceed the scale. 
+
+The properties of $e$ under classical true score theory
+[@allen_introduction_1979 56] are:
+
+\begin{align}
+E(e) &= 0\label{expError}
+\end{align}
+
+Which means that the expected, or mean value of $e$ is zero, and thus that the
+expected value of $m$ is $f(I)$ (\ref{tst2}) [@allen_introduction_1979 57].
+This means that the measurement will, despite some variation, be a reasonable
+approximation of what we are trying to measure. 
+
+Whether this assumption holds for a given scheme, however, is an important
+question: Whether what we are trying to measure is actually what we are
+purporting to measure relates to the validity of the procedure.
+
+#### Indication 
+
+What is measurement performed on, or rather, what does the set $I$ contain? The
+question of what we actually observe when we attempt to measure some concept
+relates to the idea of indication, and a discussion of what validity and
+reliability is, and how to achieve them, starts with an account of how
+measurements relate to, or rather indicate the concepts we are trying to
+measure. 
+
+In general, we can say that measurement necessarily involves some kind of
+instrumentation, or medium. The distance between the observer and the observed
+phenomenon can vary greatly; from measuring the current temperature through a
+wall thermometer to measuring the level of discontent among the Russian working
+class in 1916, or the number of casualties that occurred during the battle of
+the Somme. Obviously, the latter measurements are a great deal further removed
+from the actual phenomenon that is measured, than the former. 
+
+Whatever the distance, however, measurement is always done through indication;
+the observation of phenomena thought to be associated with the actual
+phenomenon of interest [@kerlinger_foundations_1973 431]. While temperature
+might be the object of a measurement when using an old thermometer, it is not
+directly observed; only indicated by the expansion and contraction of
+quicksilver, which is known to be correlated with temperature. Similarly, the
+phenomenon of war might be thought to be indicated by a given number of battle
+deaths, as is the case for the UCDP armed conflict data set
+[@gleditsch_armed_2002].
+
+The activities, or "operations" deemed necessary and sufficient for observing a
+sought concept is called the "operationalization" of that concept
+[@kerlinger_foundations_1973 432]. The operationalization is related to the set
+$I$. Importantly, a concept can usually be operationalized in various ways, and
+the various operationalizations might vary both in their precision and
+reliability, but also in their accessibility and practicality. 
+
+#### Validity
+
+The way data relates through real phenomena is through the "bridging" concept
+of indication. In this view, data is a bridge between an observed phenomena and
+the purported concept through an indicator. If the indication is sound, the
+measurement is "valid", meaning that we are actually measuring what we are
+trying to measure [@adcock_measurement_2001 529]. The term validity can be
+thought of as the soundness of the bridge between the observed phenomenon, and
+the referent world of concepts that we are seeking to observe
+[@singer_variables_1982 191].
+
+
+The argument that a given indicator and operationalization is a good, or
+"valid" way of producing measurements of some concept must be thorough, and
+this is increasingly important the further away from the object the observer
+is. Like all other causal relationships, indication is hypothetical, a process
+of _inferring_ from indicators to concept [@adcock_measurement_2001 531]. The
+argument behind the choice of operationalization must be sound, as it is the
+foundation of the validity of the data. Evidence put forth to support this
+hypothetical relationship between scores and indicators must be made clear. 
+
+A correspondence between a given measurement procedure and the "real" truth
+about some concept is termed the "isomorphism" between the procedure and
+reality [@kerlinger_foundations_1973 431]. Interestingly, this trait is not a
+part of the formal definition of measurement. Measurement without any
+assumptions about the truth value of the scores, as in \ref{expError}, is
+simply a "game", its rules are only that some class of phenomenon should be
+mechanically mapped to a range of outcomes. Whether the game is played with
+rules that make sense in the real world is an entirely different question
+(ibid.), but it is of course of the utmost importance when making sense of the
+data. 
+
+When developing an operationalization, a balance must be struck between being
+specific and accurate, and including enough relevant cases
+[@sundberg_systematic_2011 92]. There is always a tension between being too
+specific and too general. While the former means omitting cases, the latter
+means including too much. 
+
+The degree to which an operationalization is conceptually sensible is not
+easily verified. How can we be sure that a measurement procedure is
+well-defined, that $f(I)$ is a sound enough bridge between indicators and
+concept? In other words, how can we be sure that we are measuring what we are
+purportedly measuring, and producing valid data? 
+
+A way of reasoning about validity is through comparison with other measures. So
+called a measure can be validated by criterion, or rather, by comparison with
+some other, purportedly related concept [@allen_introduction_1979 97]. Given a
+set of measurements $M'$ and $M''$, that supposedly measure the same thing, but
+are created using different measuring procedures, the variance of the two sets
+can be thought of as being composed by two component variances, $co$ and $sp.
+The _common_ variance $co$ is the variance that is caused by a conceptual
+commonality between the measures, while the _specific_ variance $sp$ is
+specific to each measurement procedure [@kerlinger_foundations_1973 470]. A
+theoretical measure of validity, $Val$, is then defined as:
+
+\begin{align}
+Val &= \frac{co}{co + sp} \label{validityCoef}
+\end{align}
+
+This measure can be reasonably approximated by comparing $M'$ and $M''$. While
+such a comparison might be a reasonable, indeed compelling piece of evidence
+for the validity of some measure, especially given an established and trusted
+criterion measurement procedure [@adcock_measurement_2001 537], it is, of
+course, not necessarily sufficient: Like all hypotheses, validity must be
+thoroughly and exhaustively argued, and can never be decisively proven. Laying
+bare the argumentation is necessary to enable conscious use of the data, again
+emphasizing the importance of openness.
+
+#### Reliability 
+
+While considering validity is complex, indeed philosophical, Reliability is
+more easily estimated. The "reliability" of data is a measure of the extent to
+which repeated generation of the data using a given procedure would yield the
+same results. Although reliability is conceptually "simpler", it is antecedent
+to validity. A discussion of validity is moot without sufficient reliability:
+This is because validity is concerned with the conceptual meaning of $f(I)$ in
+\ref{tst1}, and if $e$ dominates $f$ in \ref{errorFunc}, validity is moot. An
+associational measure of reliability [@allen_introduction_1979 73] can be
+defined as:
+
+\begin{align}
+\rho^2_{mt} \label{rel1}
+\end{align}
+
+Errors made in performing the measurement, recording the results, or during
+other related procedures generate $e$ – error – and thus weaken the correlation
+between what "would have been" the score from the test proper, exempt these
+errors. Of course, the true score is not observable in itself. If it was, we
+would have simply used that for our measurement and avoided the $e$. In
+practice, however, we must assume that our measurements always contain some
+error. Further paraphrasing the definition of measurement within the framework
+of classical true score theory (ibid.), we expand the formalization with the
+following:
+
+\begin{align}
+E(m) &= g(I) \label{tst1}\\
+E(e) &= 0 \label{tst2}\\
+\rho_{em} &= 0 \label{tst3}\\
+\rho_{e_1e_2} &= 0 \label{tst4}\\
+\rho_{e_1m_2} &= 0 \label{tst5}
+\end{align}
+
+These are assumptions about how the measured true score relates to the other
+terms [@allen_introduction_1979 73]. \ref{tst1} states that the expected value
+of a measurement is the result of the measurement procedure, and that the
+expected error is 0 \ref{tst2}. 
+
+This is not the same as saying that the expected error is small, only that its
+mean value will be 0; $Var(e)$, the magnitude of error, cannot be assumed to be
+small or big. Assumption \ref{tst2} does make it clear, however, that the true
+score $t_u$ can theoretically be uncovered as the mean of an infinite number of
+independent, parallel measurements. 
+
+What generates random error, or rather, deviation from the procedure $f$? In
+practice, scores will be reliable if the collection is done strictly and
+precisely according to the rules laid out beforehand. Put formally, this would
+mean that $f(I)$ is followed strictly in \ref{measurement}, without admitting
+any additional variance. 
+
+Reliability increases or decreases as a function of the complexity of the
+coding rules, and the vagueness of the phenomenon being measured
+[@sundberg_systematic_2011 99]. Simply put; the easier it is to measure a
+variable correctly, the more reliable measures will be attained. Reliability
+is affected by the "clarity, explicitness and precision" of the instructions
+[@singer_variables_1982 194]; the less ambiguous the rules are, the more
+reliable the outcome will be. 
+
+If something is left implicit in the coding instructions for example, or if the
+observational matter is so complex or diverse that it cannot reasonably be
+"encapsulated" in the measurement scale, the measurements will be less reliable
+[@douglass_measuring_2018 192]. When clerks assigned with collecting data
+encounter ambiguous situations where common sense must be applied to resolve
+between categories, or to determine the inclusion or exclusion of an
+observation, the decision made is not made within $f$, and thus creates an
+additional source of variance [@stone_general_1966 62]. 
+
+However, it is important to be aware of the fact that simpler and more rigid
+rules will very likely result in less valid data [@sundberg_systematic_2011
+99], especially in cases where the material to be structured is inherently
+complex, or ambiguous. A balance must be found in every case.
+
+## Computerization
+
+A useful insight that is gained from the formalization of a data-making process
+as being a process of mapping inputs to some output using a pre-defined
+procedure is that data making is a process that is favourable to automation.
+Computers, unimaginative and diligent, excel at performing such routinized
+operations, and have been considered for such task since the very early days of
+electronic computing [see @hunt_experiments_1966].
+
+Data quality largely depends on the definition and execution of the
+data-creation process. This raises the question: Do some approaches to
+data-creation inherently lead to higher data quality? Comparing approaches in
+terms of data quality reveals that there are salient differences that might
+greatly affect the quality of the data. In addition, practical differences,
+such as the time and resources per data point, are also important. 
+
+I will argue that computerizing a data-making process, that is, using a
+computer to perform part of, or the entire process of transforming information
+into structured data, will improve data quality, especially when compared to
+data-production processes involving human judgment as part of measurement
+process. I will attempt to demonstrate this in the final chapter of this
+thesis.
+
+There are three facts about the way computers operate that drive this
+improvement in data quality: First, computers follow given algorithms
+unerringly. Second, computer algorithms can be scrutinized and reproduced post
+factum. Third, algorithms are executed extremely quickly. 
+
+### Reliability
+
+The measurement part of data-making is a schematic process of applying
+instructions to a given set of indicators to produce data. While it is
+certainly possible to perform high-quality coding using human coders, who
+follow instructions when comprehending information material, "coders are humans
+even when they are asked to act like computers" [@krippendorff_content_2004
+127]. Human error is inevitable [@cioffi-revilla_introduction_2017 103], and
+is, as mentioned, exacerbated by complex and ambiguous instructions. The
+error-inducing effects of fatigue and boredom that arise from protracted coding
+of large amounts of data [@salehyan_best_2015 108] are also avoided when using
+computers rather than people for the repetitive task of applying instructions
+to raw data. 
+
+When a computer applies a procedure to some raw data, the procedure is executed
+unerringly, yielding results with no random variation. This is a crucial
+difference between the way computers and humans cognize: For better or worse,
+humans inevitably err when following instructions, while the reliability of the
+execution of a computer program is nearly absolute [@stone_general_1966 12]. 
+
+The fact that computers are thorough and unimaginative in performing tasks,
+while not making them particularly suited for developing typologies or
+reasoning about complex ideas, makes them ideal when it comes to the repetitive
+application of instructions. As I have shown here, data creation involves both
+kinds of reasoning; the development of concepts and operationalizations, and
+the schematic observations according to the operationalization. The latter task
+is ideally suited for automation, since it should involve little to no further
+abstract reasoning.
+
+Traditionally, reliability is affected by the complexity of the coding
+instructions; the easier something is to measure and code, the more reliable
+the data will be [@sundberg_systematic_2011 99]. Complex instruction that
+demand much of the coder creates fatigue, and the need for commonsensical
+disambiguation creates bias. These "fluctuations" do not, however, enter into
+the process when a computer is used [@stone_general_1966 12].
+
+For a computer, simple and complex instructions are equally difficult to
+execute, but not equally difficult to define. When using computers to code, one
+might say that the difficulty of measuring something instead affects the
+resultant validity, or rather, the chance of measuring a concept correctly. The
+development and scrutiny of the coding procedures, or rather the
+operationalization, for a computerized data-making effort, is very important.
+
+### Openness
+
+While the schematic part of data-creation is suited for computerization, it is
+important to emphasize the importance of human intelligence in defining and
+managing the data-generating process. The importance of mindful and correct
+definitions and operationalization does not diminish with computerization, but
+arguably becomes even more important, as the volume of data that can be
+produced and disseminated is greatly increased. Thus, with the opportunities
+for creating vast amounts of data, ensuring operational validity and discussion
+about the concepts that underlie the data becomes extremely important. 
+
+While a justified critique of automated methods of information extraction is
+that they tend to sacrifice validity for high reliability
+[@bratberg_tekstanalyse_2017 120], I would argue that the combination of
+efficiency and openness inherent in computing could rather facilitate the
+development of more valid, and importantly, validateable measures, since they
+allow for a much more detailed level of critique of data-creation projects: 
+
+While computers cannot help in defining correct operationalizations and
+conceptualizations, the fact that the operationalizations must be explicitly
+detailed [@stone_general_1966 12], and might also be made open, means that
+mindful use of data is made easier. The computer will not help with the
+development of operationalizations, but the detailed scrutiny of the
+operationalization, or even testing the effect of different operationalizations
+on the resulting data, and conclusions drawn from such data, might contribute
+positively to such discussions. This is made easier when coding with
+computers, since in addition to being open, the application of the procedures
+is extremely cost-efficient. 
+
+### Resources
+
+The running costs of a computerized data collection effort, both in terms of
+time and money, are very low. While the initial investment in hardware and in
+the development of software might be substantial, the result is extremely
+efficient. This has two important implications: Firstly, more data can
+realistically be produced, no longer limited by arbitrary financial boundaries.
+Secondly, data can be coded and recoded extremely quickly, making it more
+feasible to assess a given operationalization by comparison.
+
+Experiences with automatic coding have shown substantial cost reductions:
+According to calculations by @schrodt_automated_2013 [26], coding 3 million
+data points from 26 million records with the TABARI automated coder takes about
+6 minutes, while the same work would require about 500 000 man-hours of manual
+coding. While the development of TABARI took a substantial amount of time and
+resources, once it is designed, the inclusion of new source material, and the
+continuous production of near real-time data is possible. 

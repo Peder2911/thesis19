@@ -1,0 +1,81 @@
+
+# Introduction{.unnumbered}
+
+Data is a prerequisite for scientific progress. Therefore, the development of
+new and better ways to collect data is an important and meaningful task. While
+the world is becoming saturated with information, this does not necessarily
+facilitate the production of useful data: As the volume of raw information
+increases, filtering and processing useful signals might actually become more
+diffcult. Innovation in data collection is important to handle the growing
+quantities of raw information. 
+
+The importance of collecting reliable and valid data effectively is the main
+motivation behind the present work. Lack of data creates "knowledge gaps",
+phenomena remain imponderable until they have been systematically and carefully
+observed. One such gap is created by the lack of systematic description of the
+phenomenon of _ceasefires_, which is a recurrent and presumably important part
+of many conflicts, and have been important components in many peace-processes.
+Despite this, the contingent effect of a ceasefire on a given conflict is
+unknown. Whether ceasefires facilitate peace in the long term will remain an
+open question until data has been collected and analyzed. 
+
+Data about ceasefires are certainly not lacking because they are trivial or
+uninteresting phenomena, rather, data-collection is limited by practicality.
+"Traditional" data collection is done through careful and patient treatment of
+raw information by trained human coders, a process that is costly both in terms
+of time and resources. This makes data a scarce resource. Improving the
+cost-efficiency of data collection processes might lead to much greater volumes
+of available data, which might then lead to more comprehensive understanding of
+important phenomena such as ceasefires.
+
+The procedure that is proposed and tested here involves partial automation of
+the coding process: using computers to apply coding procedures to raw data.
+This is based on a proposed linkage between measurement as traditionally
+understood in scientific litterature, and statistical learning.  Measurement,
+if treated as a process of estimating and applying measuring procedures to raw
+data, can be favourably enhanced by estimating the measuring procedures using
+statistical learning. This theoretical linkage is explored in chapters 2 and 5.
+
+The great advantage of automatization is a substantial increase in
+cost-effectiveness: The computerization of the coding process leads to a great
+increase in speed, allowing for efficient and expedient production of new data.
+This will increase the range of problems that are analyzable, spurring
+theoretical development by making more hypotheses testable.  In addition, I
+will also argue that there are substantial qualitative benefits to automating
+the data collection process, in terms of both the validity and reliability of
+the resulting data:
+
+Reliability is an obvious advantage of using computer algorithms: Computers are
+unimaginative in performing tasks, and will, even in cases requiring random
+number generation, be able to execute procedures in exactly the same way. This
+distinguishes computers from humans, that perform variably, especially tasks
+requiring sophisticated interpretation.
+
+The validity of data is not directly improved by automatization, but is made
+easier to audit. Openness and replicability are facilitated by computerization,
+as computer algorithms can be made entirely public, and are reproducible. Human
+judgement, however strictly guided by coding instructions and guides, will
+never be as scrutable as computer procedures. This makes it possible to more
+fully assess the validity of automatically produced data in terms of the chain
+of procedures leading back to the raw information. 
+
+The technicalities of estimating and testing statistical learning systems on
+text data are presented in chapter 4 and 5. Using supervised learning
+necessitates the development of a corpus of text with which to train the model,
+and a thorough testing regime that evaluates different approaches. The corpus
+is presented in chapter 4, where I elaborate on the source, treatment and
+pre-classification of the data. In the 5th chapter I describe my
+classification methodology, defining key terms like supervised machine
+learning, and cross validation of classification schemes. I also explain the
+different techniques for transforming text into data, and the metrics used to
+evaluate the different classifier schemes. 
+
+While statistical approaches to data collection have been met with some
+skepticism [@schrodt_automated_2013 p. 37], @hanna_mpeds_2017 has demonstrated
+that such approaches can be effective and accurate tools for producing data. I
+confirm these findings in chapter 6, where I evaluate several approaches, and
+present the results of a final evaluation on held-out data.  These findings
+show that statistical learning is indeed a useful technique to apply in the
+process of coding data.  With this thesis show that text classification based
+on statistical learning is indeed an interesting technology for facilitating
+effective data production within the political science domain. 

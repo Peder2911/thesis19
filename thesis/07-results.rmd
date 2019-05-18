@@ -1,0 +1,347 @@
+
+```{R}
+knitr::read_chunk('ch7_code.R')
+```
+
+```{R setup}
+```
+
+# Results 
+
+In this chapter, I present the results of two batches of tests. The first
+batch, where I test several algorithms on the training data using K-fold cross
+validation is used to select the "best" algorithm. This algorithm is then
+tested on the unseen held-out data, yielding a generalizable result.  The
+results from testing the text classifier were positive. The best-performing
+specification achieved results that were quite positive. 
+
+In addition to these numerical results, preliminary trials from the data-making
+process at PRIO / ETH have also been quite positive. As an integral part of the
+process of gathering data about ceasefires, the classifier provides coders with
+an overview of the vast textual material, providing relevance-ranked overviews
+of the many thousands of sentences contained in the "raw" news material. Using
+these, coders have reportedly been able to work quicker, both producing more
+data, and auditing material that has already been gathered.
+
+As part of the evaluation on the held-out data i also examine some errors made
+by the system. These discussions might be fruitfully considered when developing
+the system further, towards greater accuracy and coverage. I also outline some
+of the many possible ways in which the system can be improved by applying more
+sophisticated technologies. These suggestions for further research, building on
+the findings presented here, might lead to a more comprehensive automatic
+system for creating useful conflict data. 
+
+## Procedure
+
+Using the data described in chapter 5, several classifier algorithms were
+created. The modelling step in each of these procedures is an estimation of the
+"manual" procedure that was used to classify the message units as either
+relevant or irrelevant, $\hat{f}$, and is used to extrapolate this procedure to
+produce predictions of relevance for further coding work. 
+
+Determining what the ideal steps for processing and classifying the text would
+be a-priori is not possible [@grimmer_text_2013 3], and so, figuring out what
+steps to apply involves testing the performance of the algorithms on coded
+data. `r nModels` configuration are presented below. The algorithm that
+performs best in the k-fold evaluation step is then used to classify the
+held-out data, yielding a set of definitive metrics that indicate how useful
+supervised learning might be for relevance-classifying raw text in this
+specific problem domain.
+
+What is a good score? This must, in any case, be defined in terms of the task.
+There exists no general standard of passable scores for either of the metrics
+presented here [@hanna_mpeds_2017 13]. For this domain, however, I would argue
+that the results attained by the best approach are quite good, especially
+considering the relative simplicity of the classifier, preprocessing and
+featurization schemes.
+
+An even more advanced featurization, or classification step might have yielded
+even better results, although the results clearly indicate that the attempts to
+improve performance through slightly more sophisticated procedures did not pay
+off in this case. The combination of parsimony and performance makes the
+top-performing procedure a good alternative for the task of ranking the
+relevance of sentences for coders, attaining an F1 score of 
+`r round(max(resultSum$f1), digits = 2)`. 
+
+## Evaluation 
+
+```{R modelsTable, include = TRUE, warnings = FALSE, fig.cap = "Procedure overview"}
+```
+
+`r nModels` different classifier configurations were evaluated. The number was,
+in part, limited by practicality: The total number of combinations of 
+`r ncol(modelConfigs)-1`
+different steps is 
+`r 2^(ncol(modelConfigs)-1)`
+. To facilitate the comparison, I chose to limit the configurations into 
+`r length(unique(str_extract(models$name,'[a-z]+(?=-)')))`
+"families" of models.
+
+Each procedure was evaluated using 10 folds, meaning the procedure was trained
+and tested ten separate times using different partitions for training and
+testing. The scores are therefore quite robust. In the table, the mean of
+these ten scores is show, for each procedure.
+
+The Alpha family gradually introduces different steps, such as model tuning,
+Tfidf-normalization lowercasing, and n-gram featurization. The Beta family
+introduces number-word normalization and stopword removal, using the
+best-performing combination from Alpha. Finally, Gamma introduces stemming.
+Bigram and Trigram featurization is tested in all three groups.
+
+What is immediately apparent from this comparison, is that the different
+approaches to modelling are quite similar in terms of performance. Note that
+the scale on which the F1 parameter is displayed is heavily compressed: The
+F1 parameter varies between 0 and 1, while F1 values displayed here range between
+`r round(min(resultSum$f1), digits = 2)` and 
+`r round(max(resultSum$f1), digits = 2)`.
+
+Still, there are certainly interesting differences in performance. Most
+notably, the attempts to improve performance by including preprocessing and
+n-gram featurization are actually detrimental to the F1 score. This is not too
+surprising, considering the discussion of these steps in the previous chapter:
+more advanced preprocessing and vectorization steps might improve performance
+in some cases, but are not proven to be effective in all cases: Their
+effectiveness rests on certain assumptions about the text.
+
+The best-performing model was selected from each of the model families, and
+situated in ROC space.  The points in this graph represent separate scores,
+from each of the ten test folds. This plot shows that the performance detriment
+in the gamma-family seems to stem from the fact that the model yields slightly
+more false positives, while not gaining any significant new amount of true
+positives. This is penalized by the balancing parameter F1.
+
+```{R rocPlot, include = TRUE, fig.cap = "ROC procedure comparison"}
+```
+
+Again, it is quite clear that the models are not very different; in the full
+extent of ROC-space it is difficult to tell them apart. While it might be
+argued that the differences are so small that they are attributable to random
+error, this conclusion would still favour the best-performing procedure, 
+`r topModel['name']`, 
+since it is also the simplest procedure, involving fewer steps than beta and gamma.
+
+The top performing classifier, with a mean F1 score of 
+`r round(topModel['f1'], digits = 2)`, was 
+`r topModel['name']`.
+
+ `r topModel['name']`
+thus seems to be the best $\hat{f}$ for predicting $y$ that was attainable with
+the techniques attempted here, and the training data that was used. It should,
+however, be noted that the difference between the F1 value of the top
+performing classifier and the F1 value of the worst performing one, 
+`r resultSum[resultSum$f1 == min(resultSum$f1),'name']`, 
+is only 
+`r round(max(resultSum$f1) - min(resultSum$f1), digits = 4)`.
+
+It is certainly interesting that the procedure that yielded the best scores in
+the cross-validation evaluation was the simplest one. This is not easily
+interpretable, but should be considered in light of the discussion of these
+steps in the previous chapter. Feature selection might be excluding certain
+features that are actually relevant, symbol normalization like stemming and
+lowercasing might be removing important nuances of information from the
+normalized symbols, and n-gram vectorization seems to lead to an
+overproliferation of features, that the model is not able to utilize
+effectively. Model tuning and Term-frequency-inverse-document-frequency,
+however, yield slight improvements over the baseline model.
+
+### Holdout evaluation
+
+To evaluate the generalizability of 
+`r topModel['name']`, 
+the procedure was subsequently tested on the held out data; data that has not
+been handled during the development and testing of the procedures. The results
+attained by attempting to classify the holdout data are more generalizable,
+since the data has not been used to create the classifier. 
+
+Since a majority of the cases in the holdout data are negative, meaning that
+they are uninteresting to coders, it might be a useful reference strategy to
+predict all the sentences as irrelevant, and calculate the accuracy: This gives
+an accuracy of
+`r round((sum(holdPred$act == 0) / nrow(holdPred)) * 100, digits = 2)`%. 
+Randomly guessing the class in every case, with evenly balanced probabilities
+of 50/50 for each class, gives an accuracy score of 
+`r round(sum(holdPred$randvalid) / nrow(holdPred), digits = 2)`%.
+Using `r topModel['name']`, on the other hand, yields the following results:\newline
+
+```{R confMat, include = TRUE, results ='asis'}
+```
+\newline
+This translates to a precision score of 
+`r round(topPrecision, digits = 2)`
+, a Recall score of
+`r round(topRecall, digits = 2)`
+, an accuracy of
+`r round(topAccuracy * 100, digits = 2)`%
+, and an F1 score of 
+`r round(topF1, digits = 2)`.
+These scores seem to indicate that the information about whether a sentence is
+relevant or not for further coding yields itself quite well to classification;
+the proposed lower boundary for acceptable F1 values for a similar
+classification problem has been suggested as 0.65 [@hanna_mpeds_2017 13].
+
+### Holdout error analysis
+
+The errors made by `r topModel['name']` might inform future work improvements
+to the classifier. Browsing the sentences that were misclassified yields some
+interesting reflections on how the classifier works. Along with the
+coefficients estimated by the model, also called the feature weights, we might
+better understand the errors made by the model. These are the ten strongest
+coefficients in either direction:
+
+```{R wordCoefs, include = TRUE}
+```
+
+\noindent
+The four verbs that are most strongly correlated with a sentence being
+interesting have much stronger coefficients than most other words,
+particularly, and perhaps expectedly, the word "signed".
+
+The verb "to sign", specifically the conjugated form "signed" which corresponds
+to several conjugated forms of the verb, plays a significant role in discerning
+between the sentences.  Both of the "false positive" sentences contain the
+salient conjugation, that strongly correlate with a sentence being interesting.
+
+There were `r fp` false positive classifications. Two of these are:
+
+* «A final and comprehensive ceasefire was to have been signed last month.»
+* «In the first place, there was no cease-fire agreement signed in Windhoek»
+
+Parsing the sentences, however, we see that the semantic meaning of both
+sentences does not, in fact, indicate that signing has taken place. The fact
+that "no cease-fire" has been signed is a sufficiently complex formulation to
+slip under the radar. Similarly, the complex verb construction "was to have
+been signed", subtly negating the verb, is not properly understood by the
+classifier. The passive-voice perfective construction "was to have been" only
+appears once in the holdout data, and does not appear in the training data. 
+
+Handling linguistic diversity is a matter of creating more training data, as
+sufficient amounts of training data would contain cases where the classifier is
+taught more advanced grammar than it is able to learn from the present data.
+
+Another interesting false positive sentence is:
+
+* «A 1999 peace accord signed in Lusaka set a timetable for a ceasefire, the
+  deployment of U.N. peacekeepers and a transition to democracy, but it has not
+  been implemented.»
+
+This sentence was strongly predicted to be true, but was manually labelled as
+uninteresting. Figuring out how to handle this sort of sentence, however, is
+harder, because it must involve some disambiguation of the labelling rules: The
+sentence was labelled uninteresting because it does not directly indicate the
+start of a ceasefire, but an accord was signed. While it might be argued that
+this sentence should in fact had been labelled as "interesting", since it
+clearly indicates the signing of a peace accord, it might also be argued that
+focus should remain on the start of actual events. In the last case, the
+classifier can be made able to handle such ambiguous cases as this one, given
+more training data. 
+
+There were `r fn` false negatives:
+
+* «Although Kabila and the rebels have accused each other of violating the
+  ceasefire deal that went into effect on September 1, there has been a
+  substantial reduction in fighting.»
+
+The negative, irrelevant sentences include a lot of mentions of violations.
+Violation is strongly negatively correlated with a sentence being interesting,
+and this is presumably true of other forms of the stem "violat", like the above
+"violating". Despite mentions of violations, the sentence also mentions in
+passing when a ceasefire went into effect, rendering it interesting. This is
+overshadowed by the main content of the text, however.
+
+* For that reason, Israel's Security Cabinet unanimously rejected a U.S.
+  proposal for a ceasefire on Friday, though Israel agreed to a 12-hour pause
+  for Saturday.
+
+This is a very difficult sentence to get right by simply using word occurrence,
+since the rejection of a ceasefire proposal will almost certainly render a
+sentence "irrelevant", while the sentence also mentions a "12-hour pause",
+which was interpreted by the human coder as indicating the start of a 12-hour
+ceasefire. 
+
+* The cease-fire is reportedly for one week.
+* They agree to a cease-fire.
+
+These sentences were also, perhaps surprisingly, misclassified as negative,
+while they are labelled as positive. This perhaps reflects the detriment of
+using such short message units: Sentences of under ten words contain very
+little information with which to discern between positives and negatives. In
+addition to this, neither of these two examples contain words that strongly
+indicate that they are positive. In fact, the conjugation "agree" is quite
+negatively correlated with a sentence being interesting, while the past-tense
+form "agreed" is strongly positively correlated.
+
+While some of these errors would have been very hard to avoid, owing to
+grammatical complexity, and lack of information due to brevity, the production
+of more training data would certainly help. In addition, it might be
+interesting to experiment with alternative vectorization strategies, such as
+Doc2Vec [@le_distributed_2014], that might facilitate better handling of
+unorthodox wording.
+
+## Further work 
+
+The classifier has already been "put to work" in the process of coding the PRIO
+ceasefire-dataset. While it is still necessary to manually code the details of
+each ceasefire, such as what the parties are, what conflict the ceasefire
+pertains to, and the concrete dates on which it begins and ends, the
+"reccomendation system" that has been implemented with this classifier helps
+coders skim through the material much more efficiently.
+
+While no quantitative evaluation of the effect of the system on manual coding
+performance has been conducted yet, anectodal information from these first
+trials has been promising. Such an evaluation would require considerable time
+and resources, involving multiple passes over the same material to assess the
+effect of using the system, compared to not using the system. It would,
+however, be very interesting to quantify the alleged effect of using the
+reccommendations.
+
+While these initial results have been promising, there are many interesting
+ways in which the classifier could be improved: The accuracy of the
+recommendations could be improved by adding more training data, or using more
+sophisticated technologies. In addition, the system could also be made to
+produce more information, in the form of partial coding, mapping each sentence
+to a particular conflict, set of actors, or similar contexts. This could lead
+to a more comprehensive automatization, finally leading to a completely
+automatic system for extracting interesting information from news data streams,
+such as has been demonstrated by @hanna_mpeds_2017, @osorio_supervised_2017 and
+@schrodt_keds:_1994 among others.
+
+Adding more training data is the most obvious way to increase performance of
+the relevance-rating step.  Including data from more conflicts and countries
+would improve the generalizability of the classifier. Producing training data
+is laborious, but pays off in terms of model performance; strategies for
+producing useful training data, like using active learning [@rubens_active_2015
+809] might be interesting to explore when creating more training data. 
+
+In addition, exploring the merit of more advanced vectorization and
+classification techniques would be interesting. Vectorizing text using sentence
+embeddings [@le_distributed_2014] would be particularly interesting to explore.
+In addition, promising results have been attained using Neural Networks
+[@beieler_generating_2016] for the classification step; a much more advanced
+and computationally intensive classifier strategy. 
+
+Automating the coding process further would require the development of more
+sophisticated algorithms for parsing and processing the sentences, and
+extracting information. The system presented here is only a single step towards
+a fully automated coder, but discerning between relevant and irrelevant text
+units is an important first step in this process [@hanna_mpeds_2017 7].
+Stepping up the ladder towards fully automated information extraction, masses
+of unstructured information might be made intelligible, and open to analysis.
+In addition, such a system could be made to create the data in real-time,
+updating the data set continuously.
+
+There are many problems inherent in full automatization, including include
+solving duplicate events [@schrodt_automated_2013 30], resolving ambiguous or
+difficult language constructions, and avoiding semantically irrelevant material
+where wording might trick automated systems. Sports reporting, where military
+metaphors are common, are a typical challenge [@schrodt_threes_2014 4].
+
+The approach demonstrated here, pairing human intelligence with machine
+pre-filtering and recommendations is cost-effective and useful. Getting the
+best of both words, human intelligence paired with machine efficiency, the
+pairing manages to increase productivity while avoiding the problems inherent
+in full automatization. It should also perhaps be noted that the present system
+was developed in one year, by a single undergraduate student, including the
+production of training data.  This means that development costs were negligible
+compared to the more comprehensive coder projects mentioned above, developed by
+professional scientists.
+

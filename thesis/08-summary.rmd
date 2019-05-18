@@ -1,0 +1,76 @@
+# Summary
+
+In this thesis, I have argued for, and demonstrated the automatization of part
+of a data-creation process. Results seem to show that the system is a
+useful addition to such a process, yielding generally useful recommendations.
+The results show what kinds of procedures are most effective, among a selection
+of simple preprocessing and classifier configurations. The present system is a
+useful point of departure for future information extraction, using either
+manual or automatic techniques.
+
+The work presented here proceeds from the idea that data is a necessary
+prerequisite for the development of scientific theory. Facilitating more
+efficent and precise data collection is an important part of expanding the
+scope of testable hypotheses. This helps theory development, by both enabling
+scrutiny of established theories, and perhaps also inspiring new, more accurate
+ones. 
+
+The development of more accurate theory about how ceasefires interact with
+conflict is the goal of the data collection program in which this project is
+embedded. Refining our knowledge about ceasefires makes it possible for
+policy-makers to design better interventions and mediation strategies,
+potentially migitating and preventing more conflict. 
+
+Improving the efficiency and quality of data-production is a powerful
+motivation, given the importance of achieving a better understanding of
+conflict related phenomena, such as ceasefires. 
+
+Data collection is difficult and expensive. Thus, useful data is a scarce
+commodity, requiring great investments of time and money to develop.  This
+problem is exacerbated when observational material is ambiguous, requiring
+careful interpretation. Text is such an information source, being a conduit of
+information that imparts stochastic variance in the form of language
+idiosynchrasies, making the task of retreiving useful information from large
+corpora of text very challenging. In addition, in an age of information glut,
+ensuring the veracity of data is important, and increasingly difficult.
+
+The complexity of text as a medium of information makes it difficult to develop
+data collection procedures. Using machine learning techniques, decision
+functions are learned previously labelled training-data rather than specified;
+this means that the careful interpretative wisdom humans apply when retreiving
+information from text can be learned, and subsequently applied by machines.
+
+This is potentially a very effective way of approaching complex problems such
+as text-labelling. With the formalization of data-collection, and exposition of
+machine-learning theory, I hope to have shown that the process of
+data-collection can be seen as analogous to the process of estimating and
+applying machine-learning functions.
+
+This was demonstrated and evaluated in the latter part of this thesis. Building
+and evaluating several relatively simple approaches to machine classifications,
+useful knowledge was gained about how to approach the particular problem of
+relevance rating. 
+
+The findings presented here show that the application of machine learning
+technology to the particular problem of discerning between relevant and
+irrelevant material for coding ceasefires is very useful. The primary issue of
+cost, which is prohibitive to data-collection, is effectively mitigated by the
+application of automatic tools with essentially no running cost.  This also
+means that issues of data quality can be handled more effectively, since more
+resources and focus can be put into the development of sound procedures and
+algorithms rather than the drudgework of manual data collection.
+
+While the present system can be improved and extended in many interesting ways,
+this proof of concept is a useful system in and of itself, already having
+yielded useful results in the process of making a dataset of ceasefires.  The
+interdisciplinary approach, drawing on computer science, statistical learning
+theory, formal scientific methodology and conflict research which is
+demonstrated in this thesis is a powerful approach. With the further
+development of social science methodology leveraging the power and efficiency
+of computerized inference, one might hope that enough empirical data can be
+produced to enable researchers to gain comprehensive understanding of phenomena
+such as ceasefires, thus perhaps allowing for the resolution of more conflicts,
+preventing violence and devastation. 
+
+\newpage
+\null
